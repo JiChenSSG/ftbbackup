@@ -24,6 +24,8 @@ type Config struct {
 	LogMaxSize    int    `env:"LogMaxSize,default=10"`
 	LogMaxBackups int    `env:"LogMaxBackups,default=50"`
 	LogMaxAge     int    `env:"LogMaxAge,default=30"`
+
+	Location string `env:"Location,default=unknown"`
 }
 
 func initconfig() {

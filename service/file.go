@@ -1,34 +1,38 @@
 package service
 
 import (
-	"io/ioutil"
 	"os"
 	"sort"
+	"strings"
 )
 
-func GetFileList(path, suffix string) ([]os.FileInfo, error) {
-	files, err := ioutil.ReadDir(path)
+func GetLatestFile(path, suffix string) (os.DirEntry, error) {
+	files, err := os.ReadDir(path)
 	if err != nil {
 		return nil, err
 	}
 
-	var fileList []os.FileInfo
+	fileList := make([]os.DirEntry, 0)
 	for _, file := range files {
 		if file.IsDir() {
 			continue
 		}
-
-		if suffix != "" && file.Name()[len(file.Name())-len(suffix):] != suffix {
+		if suffix != "" && !file.IsDir() && !strings.HasSuffix(file.Name(), suffix) {
 			continue
 		}
 
 		fileList = append(fileList, file)
 	}
 
-	// sort by mod time
 	sort.Slice(fileList, func(i, j int) bool {
-		return fileList[i].ModTime().Before(fileList[j].ModTime())
+		info1, _ := fileList[i].Info()
+		info2, _ := fileList[j].Info()
+		return info1.ModTime().After(info2.ModTime())
 	})
 
-	return fileList, nil
+	if len(fileList) == 0 {
+		return nil, nil
+	}
+
+	return fileList[0], nil
 }
