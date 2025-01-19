@@ -6,8 +6,6 @@ import (
 
 	"github.com/Netflix/go-env"
 	"github.com/joho/godotenv"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 var (
@@ -42,24 +40,4 @@ func initconfig() {
 	}
 
 	log.Printf("Load Config Success: %+v\n", config)
-}
-
-func GetLogLevel() zapcore.Level {
-	level := GetConfig().Loglevel
-	switch level {
-	case "info":
-		return zap.InfoLevel
-	case "debug":
-		return zap.DebugLevel
-	case "warn":
-		return zap.WarnLevel
-	case "error":
-		return zap.DPanicLevel
-	case "panic":
-		return zap.PanicLevel
-	case "fatal":
-		return zap.FatalLevel
-	}
-
-	return zap.InfoLevel
 }

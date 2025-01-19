@@ -2,8 +2,6 @@ module github.com/jichenssg/ftbbackup
 
 go 1.23
 
-toolchain go1.23.5
-
 require (
 	github.com/Netflix/go-env v0.1.2
 	github.com/joho/godotenv v1.5.1
