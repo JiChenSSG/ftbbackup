@@ -12,12 +12,15 @@ install: build
 	sudo mkdir -p $(INSTALL_PATH)
 	sudo cp $(BINARY_NAME) $(INSTALL_PATH)/
 
-	sudo cp .env.example $(ENV_FILE)
+	if [ ! -f $(ENV_FILE) ]; then \
+		sudo cp .env.example $(ENV_FILE); \
+		sudo chmod 600 $(ENV_FILE)
+		sudo chown root:root $(ENV_FILE)
+	fi
 
-	sudo chmod 600 $(ENV_FILE)
-	sudo chown root:root $(ENV_FILE)
-
-	sudo ln -s $(INSTALL_PATH)/$(BINARY_NAME) /usr/local/bin/$(BINARY_NAME)
+	if [! -f /usr/local/bin/$(BINARY_NAME)]; then \
+		sudo ln -s $(INSTALL_PATH)/$(BINARY_NAME) /usr/local/bin/$(BINARY_NAME); \
+	fi
 
 uninstall:
 	sudo rm -rf $(INSTALL_PATH)
