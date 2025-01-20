@@ -44,14 +44,6 @@ func main() {
 	// 		zap.Error(err),
 	// 	)
 	// }
-
-	file, err := service.GetFile(fmt.Sprintf("%s/%s", config.GetConfig().Location, entry.Name()))
-	if err != nil {
-		zap.L().Fatal("get file error",
-			zap.Error(err),
-		)
-	}
-
 	zap.L().Info("uploading...")
 
 	var s storage.Storage
@@ -67,11 +59,18 @@ func main() {
 			zap.L().Info("webdav upload start")
 			success := false
 			for i := 0; i < 3; i++ {
+				file, err := service.GetFile(fmt.Sprintf("%s/%s", config.GetConfig().Location, entry.Name()))
+				if err != nil {
+					zap.L().Fatal("get file error",
+						zap.Error(err),
+					)
+				}
+
 				if i != 0 {
 					zap.L().Info("retrying...")
 				}
 
-				err := service.Upload(s, config.GetConfig().WebdavStoragePath, entry.Name(), file)
+				err = service.Upload(s, config.GetConfig().WebdavStoragePath, entry.Name(), file)
 
 				if err != nil {
 					zap.L().Error("upload error",
