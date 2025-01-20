@@ -26,6 +26,12 @@ type Config struct {
 	LogMaxAge     int    `env:"LogMaxAge,default=30"`
 
 	Location string `env:"Location,default=unknown"`
+
+	Webdav            bool   `env:"Webdav,default=false"`
+	WebdavRoot        string `env:"WebdavRoot"`
+	WebdavUser        string `env:"WebdavUser"`
+	WebdavPassword    string `env:"WebdavPassword"`
+	WebdavStoragePath string `env:"WebdavStoragePath"`
 }
 
 func initconfig() {

@@ -36,3 +36,21 @@ func GetLatestFile(path, suffix string) (os.DirEntry, error) {
 
 	return fileList[0], nil
 }
+
+func ReadFile(filepath string) ([]byte, error) {
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func GetFile(path string) (*os.File, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, nil
+}
