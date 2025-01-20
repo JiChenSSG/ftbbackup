@@ -36,8 +36,11 @@ type Config struct {
 
 func initconfig() {
 	// load from .env
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Load Environment Error: ", err)
+	if err := godotenv.Load("/etc/ftbbackup/.env"); err != nil {
+		err = godotenv.Load()
+		if err != nil {
+			log.Fatal("Load .env Error: ", err)
+		}
 	}
 
 	config = Config{}

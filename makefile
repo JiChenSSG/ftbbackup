@@ -14,11 +14,11 @@ install: build
 
 	if [ ! -f $(ENV_FILE) ]; then \
 		sudo cp .env.example $(ENV_FILE); \
-		sudo chmod 600 $(ENV_FILE)
-		sudo chown root:root $(ENV_FILE)
+		sudo chmod 600 $(ENV_FILE); \
+		sudo chown root:root $(ENV_FILE); \
 	fi
 
-	if [! -f /usr/local/bin/$(BINARY_NAME)]; then \
+	if [ ! -f /usr/local/bin/$(BINARY_NAME) ]; then \
 		sudo ln -s $(INSTALL_PATH)/$(BINARY_NAME) /usr/local/bin/$(BINARY_NAME); \
 	fi
 
